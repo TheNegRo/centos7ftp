@@ -1,0 +1,74 @@
+//创建索引
+//一.创建表的时候创建索引
+create table 表名(
+        字段名 数据类型[完整性约束条件],
+        ...
+        字段名 数据类型,
+        [UNIQUE|FULLTEXT|SPATIAL] INDEX|KEY
+  );
+//1-1.创建普通索引
+create table test1(
+  id  INT,
+  name VARCHAR(20),
+  age INT,
+  INDEX (id)
+);
+//可以插入一条数据,查看索引是否被使用
+explain select * from test1 where id=1 \G;
+//1-2.创建唯一性索引
+create table test2(
+  id  INT,
+  name VARCHAR(20),
+  age INT,
+  UNIQUE INDEX unique_id(id asc)
+);
+//1-3.创建全文索引
+create table test3(
+  id  INT,
+  name VARCHAR(20),
+  age INT,
+  FULLTEXT INDEX fulltext_name(name)
+)ENGINE=MyISAM;
+//1-4.创建单列索引
+create table test4(
+  id  INT,
+  name VARCHAR(20),
+  age INT,
+  INDEX single_name(name(20))
+);
+//1-5.创建多列索引
+create table test5(
+  id  INT,
+  name VARCHAR(20),
+  age INT,
+  INDEX multi(id,name(20))
+);
+//1-6.创建空间索引
+create table test6(
+  id  INT,
+  space GEOMETRY NOT NULL,
+  SPATIAL INDEX sp(space)
+)ENGINE=MyISAM;
+---------------------------------------------------
+//二.使用create index语句在已经存在的表上创建索引
+//首先新建一个表,这个表没有索引
+create table student(
+  id int,
+  age int,
+  name varchar(20),
+  intro varchar(40),
+  g GEOMETRY NOT NULL
+)ENGINE=MyISAM;
+//2-1.创建普通索引
+create index index_id on student(id);
+//2-2.创建唯一性索引
+create unique index uniqueidx on student(id);
+//2-3.创建单列索引
+create index singleidx on student(age);
+//2-4.创建多列索引
+create index mulitidx on student(name(20),intro(40));
+//2-5.创建全文索引
+create fulltext index fulltextidx on student(name);
+//2-6.创建空间索引
+create spatial index spatidx on student(g); 
+//下图是第二种方法创建索引演示后的所有索引
