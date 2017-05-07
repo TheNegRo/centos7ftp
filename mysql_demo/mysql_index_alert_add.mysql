@@ -1,0 +1,23 @@
+//三.使用alter table语句在已经存在的表上创建索引
+//删除student表，重新创建
+drop table student;
+create table student(
+  id int,
+  age int,
+  name varchar(20),
+  intro varchar(40),
+  space GEOMETRY NOT NULL
+)ENGINE=MyISAM;
+//3-1.创建普通索引
+alter table student add index index_id(id);
+//3-2.创建唯一性索引
+alter table student add unique uniqueidx(id);
+//3-3.创建单列索引
+alter table student add index singleidx (age);
+//3-4.创建多列索引
+alter table student add index multidx(name(20),intro(40));
+//3-5.创建全文索引
+alter table student add fulltext index fulltextidx(name);
+//3-6.创建空间索引
+alter table student add spatial index spatidx(space);
+//下图演示结果
