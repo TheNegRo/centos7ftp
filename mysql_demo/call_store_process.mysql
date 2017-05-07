@@ -1,0 +1,18 @@
+//定义存储过程
+delimiter //
+create procedure proc1(in name varchar(4),out num int)
+begin
+select count(*) into num from student where name=name;
+end//
+delimiter ;
+//调用存储过程
+call proc1("tom",@num) -- 查找名为tom学生人数
+//查看结果
+select @num;  -- 看下图
+
+//查看存储过程
+ show procedure status like 'p%' \G -- 获得以p开头的存储过程信息
+//修改存储过程
+alter {procedure|function} sp_name[characteristic...]
+//删除存储过程
+drop procedure proc1;
