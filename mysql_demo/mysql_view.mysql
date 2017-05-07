@@ -1,0 +1,44 @@
+//在单表上创建视图,重新创建student表，插入数据
+create table student(
+  id int not null primary key auto_increment,
+  name varchar(10) not null,
+  math float,
+  chinese float
+);
+insert into student(name,math,chinese) values
+('howie1',66,77),
+('howie2',66,77),
+('howie3',66,77);
+//开始创建视图
+create view stu_view as select math,chinese,math+chinese from student;  -- 下图可看出创建成功
+//也可以创建自定义字段名称的视图
+create view stu_view2(math,chin,sum) as select math,chinese,math+chinese from student;
+
+
+//在多表上创建视图，创建表stu_info，插入数据
+create table stu_info(
+  id int not null primary key auto_increment,
+  class varchar(10) not null,
+  addr varchar(100)
+);
+insert into stu_info(class,addr) values
+('1','anhui'),
+('2','fujian'),
+('3','guangdong');
+//创建视图stu_class
+create view stu_class(id,name,class) as 
+select student.id,student.name,stu_info.class from 
+student,stu_info where student.id=stu_info.id;
+//查看视图
+desc stu_class;
+show table status like 'stu_class'\G
+show create view stu_class\G
+//修改视图
+create or replace view stu_view as select * from student;
+alter view stu_view as select chinese from student;
+//更新视图
+update stu_view set chinese=100;
+insert into student values(null,'haha',100,100);
+delete from stu_view2 where math=100;
+//删除视图
+drop view if exists stu_view2;
