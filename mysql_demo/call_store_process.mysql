@@ -16,3 +16,11 @@ select @num;  -- 看下图
 alter {procedure|function} sp_name[characteristic...]
 //删除存储过程
 drop procedure proc1;
+
+
+//查看存储过程
+ show procedure status like 'p%' \G -- 获得以p开头的存储过程信息
+//修改存储过程
+alter {procedure|function} sp_name[characteristic...]
+//删除存储过程
+drop procedure proc1;
