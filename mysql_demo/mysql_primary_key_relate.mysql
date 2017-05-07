@@ -1,0 +1,45 @@
+//创建表class,student
+create table class(
+   id int not null primary key,
+   classname varchar(20) not null
+)ENGINE=InnoDB;
+create table student(
+   stu_id int not null primary key,
+   stu_name varchar(20) not null,
+   cid int not null      -- 表示班级id，它就是class表的外键
+)ENGINE=InnoDB;
+//添加外键约束
+alter table student add constraint FK_ID foreign key(cid) references class(id);
+//删除外键约束
+alter table student drop foreign key FK_ID;
+
+操作关联表
+
+//数据表有三种关联关系，多对一、多对多、一对一
+//学生(student)和班级(class)是多对一关系，添加数据
+//首选添加外键约束
+alter table student add constraint FK_ID foreign key(cid) references class(id);
+//添加数据,这两个表便有了关联若插入中文在终端显示空白，可设置set names 'gbk';
+insert into class values(1,"软件一班"),(2,"软件二班");
+insert into student values(1,"howie",1),(2,"howie1",2),(3,"howie2",1),(4,"howie3",2);
+//交叉连接
+select * from student cross join class;
+//内连接，该功能也可以使用where语句实现
+select student.stu_name,class.classname from student join class on class.id=student.cid;
+//外连接
+//首先在student,class表中插入数据
+insert into class values(3,"软件三班");
+//左连接，右连接
+select s.stu_id,s.stu_name,c.classname from student s left join class c on c.id=s.cid;
+select s.stu_id,s.stu_name,c.classname from student s right join class c on c.id=s.cid;
+//复合条件连接查询就是添加过滤条件
+//子查询
+//in关键字子查询跟上面的in关键字查询类似
+select * from student where cid in(select id from class where id=2);
+//exists关键字查询,相当于测试，不产生数据，只返回true或者false，只有返回true，外层才会执行，具体看下图
+select * from student where exists(select id from class where id=12);   -- 外层不会执行
+select * from student where exists(select id from class where id=1);    -- 外层会执行
+//any关键字查询
+ select * from student where cid>any(select id from class);
+//all关键字查询
+ select * from student where cid=any(select id from class);
