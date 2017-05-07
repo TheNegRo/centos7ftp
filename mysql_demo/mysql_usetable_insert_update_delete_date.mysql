@@ -1,0 +1,30 @@
+//重新建立表student
+drop table student;
+create table student(
+  id int,
+  name varchar(20) not null,
+  grade float
+);
+//插入一条数据，也可以少某个字段的同时也少对应的数据
+insert into student(id,name,grade) values(1,'howie',70);
+//也可以不指定字段名，但要注意顺序
+insert into student values(2,'howie',80);
+//也可以这样添加数据
+insert into student set id=3,name="howie",grade=90;
+//同时添加多条数据
+insert into student values
+(4,'howie',80),
+(5,'howie',80),
+(6,'howie',80);
+
+//更新id=1的数据
+update student set name="howie1",grade=60 where id=1;
+//批量更新,如果没有where子句，会更新表中所有对应数据
+update student set grade=100 where id<4;
+
+//删除id=6的数据
+delete from student where id=6;
+//批量删除数据
+delete from student where id>3;
+//删除所有数据,DDL(数据定义语言)语句 truncate table student也可以删除表内所有数据
+delete from student;
