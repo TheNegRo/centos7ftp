@@ -1,0 +1,27 @@
+//创建查看student表的存储过程
+//创建student表
+create table student( 
+  id int not null primary key auto_increment, 
+  name varchar(4), 
+  grade float 
+)ENGINE=InnoDB default character set utf8;
+delimiter //  -- 将mysql的结束符设置为//
+create procedure Proc()
+  begin
+  select * from student;
+  end //
+delimiter ;   -- 将mysql的结束符设置为;
+call Proc();  -- 这样就可以调用该存储过程
+//变量的使用,mysql中变量不用事前申明，在用的时候直接用“@变量名”使用就可以
+set @number=100; -- 或set @num:=1;
+//定义条件和处理程序
+//光标的使用
+//1.声明光标
+DECLARE * cursor_name* CURSOR FOR select_statement
+2. 光标OPEN语句
+OPEN cursor_name
+3. 光标FETCH语句
+FETCH cursor_name INTO var_name [, var_name] ...
+4. 光标CLOSE语句
+CLOSE cursor_name
+//流程控制的使用  不做介绍
