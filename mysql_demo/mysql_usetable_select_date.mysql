@@ -1,0 +1,63 @@
+//建立表student  单表查询
+create table student(
+  id int not null auto_increment,
+  name varchar(20) not null,
+  grade float,
+  primary key(id)
+);
+//插入数据
+insert into student (name,grade) values
+("howie1",40),
+("howie1",50),
+("howie2",50),
+("howie3",60),
+("howie4",70),
+("howie5",80),
+("howie6",null);
+//查询全部
+select * from student;
+//查询某个字段
+select name from student;
+//条件查询,查询id=2学生的信息
+select * from student where id=2;
+//in关键字查询,也可以使用not in
+select * from student where id IN(1,2,3);
+//between and关键字查询
+select * from student where id between 2 and 5;
+//空值(NULL)查询，使用IS NULL来判断
+select * from student where grade is null;
+//distinct关键字查询
+select distinct name from student;
+//like关键字查询,查询以h开头，e结尾的数据
+select * from student where name like "h%e";
+//and关键字多条件查询,or关键字的使用也是类似
+select * from student where id>5 and grade>60;
+
+
+高级查询
+//聚合函数
+//count()函数,sum()函数,avg()函数,max()函数,min()函数
+select count(*) from student;
+select sum(grade) from student;
+select avg(grade) from student;
+select max(grade) from student;
+select min(grade) from student;
+//对查询结果进行排序
+select * from student order by grade;
+//分组查询
+//1.单独使用group by分组
+select * from student group by grade;
+//2.和聚合函数一起使用
+select count(*),grade from student group by grade;
+//3.和having关键字一起使用
+select sum(grade),name from student group by grade having sum(grade) >100;
+//使用limit限制查询结果的数量
+select * from student limit 5;
+select * from student limit 2,2;
+select * from student order by grade desc limit 2,2;
+//函数,mysql提供了许多函数
+select concat(id,':',name,':',grade) from student;
+//为表取别名
+select * from student as stu where stu.name="howie";
+//为字段取别名,as关键字也可以不写
+select name as stu_name,grade stu_grade from student;
