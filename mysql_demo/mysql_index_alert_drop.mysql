@@ -1,0 +1,6 @@
+//删除索引，有下面两种方式
+//1.使用alter table删除索引fulltextidx
+alter table student drop index fulltextidx;
+//2.使用drop index删除索引spatidx
+drop index spatidx on student;
+//下图可看到删除成功
